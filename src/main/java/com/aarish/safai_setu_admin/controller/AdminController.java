@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import com.aarish.safai_setu_admin.model.Report;
 import com.aarish.safai_setu_admin.service.AdminService;
 
-@RestController
-@RequestMapping("/api/admin")  // 👈 all routes here are under /api/admin
+@RestController 
 public class AdminController {
 
     @Autowired
@@ -19,7 +18,7 @@ public class AdminController {
         return new ResponseEntity<>(service.getAllProducts(), HttpStatus.OK);
     }
 
-    @PutMapping("/resolve/{id}")
+    @PutMapping("/api/admin/resolve/{id}")
     public ResponseEntity<?> verifyResolve(@PathVariable int id) {
         Report report = service.verifyResolve(id);
         if (report == null) {
