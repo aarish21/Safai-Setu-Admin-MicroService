@@ -29,7 +29,7 @@ public class SecurityConfig {
             .formLogin(form -> form
                 .loginPage("/admin/login")       // React page
                 .loginProcessingUrl("/login")    // backend login endpoint
-                .defaultSuccessUrl("/", true)
+                .defaultSuccessUrl("/admin", true)
                 .failureUrl("/admin/login?error=true")
                 .permitAll()
             )
