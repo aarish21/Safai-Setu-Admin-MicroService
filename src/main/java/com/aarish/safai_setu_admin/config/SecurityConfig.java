@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -23,10 +22,10 @@ public class SecurityConfig {
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .anyRequest().permitAll()
             )
+            // ✅ use Spring's built-in /login endpoint
             .formLogin(form -> form
-                .loginPage("/admin/login")      // your custom login endpoint
-                .loginProcessingUrl("/perform_login")  // backend handles POST
-                .defaultSuccessUrl("/admin/", true)
+                .loginProcessingUrl("/login") // default Spring login endpoint
+                .defaultSuccessUrl("/", true)
                 .failureUrl("/admin/login?error=true")
                 .permitAll()
             )
@@ -35,16 +34,21 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/")
                 .permitAll()
             );
+
+        // ✅ allow React to connect from localhost:3000
+        http.cors(cors -> {}); // use default CORS setup; can expand later
+
         return http.build();
     }
 
     @Bean
     public UserDetailsService users() {
-        UserDetails admin = User.builder()
+        return new InMemoryUserDetailsManager(
+            User.builder()
                 .username("admin")
-                .password("{noop}password")
+                .password("{noop}password") // no encoding for simplicity
                 .roles("ADMIN")
-                .build();
-        return new InMemoryUserDetailsManager(admin);
+                .build()
+        );
     }
 }
