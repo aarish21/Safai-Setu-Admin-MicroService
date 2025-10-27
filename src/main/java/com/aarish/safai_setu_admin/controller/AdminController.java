@@ -30,4 +30,9 @@ public class AdminController {
 		}
 		 return ResponseEntity.ok("Report verified and marked as resolved!");
 	}
+	@GetMapping("/")
+	public String home() {
+	    return "✅ Safai Setu Admin Backend is running!";
+	}
+
 }
