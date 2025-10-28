@@ -20,7 +20,7 @@ public class AdminController {
     }
     
     @PutMapping("/api/admin/resolve/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> verifyResolve(@PathVariable int id) {
         Report report = service.verifyResolve(id);
         if (report == null) {

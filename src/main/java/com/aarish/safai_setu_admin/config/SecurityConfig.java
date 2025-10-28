@@ -22,7 +22,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .cors(cors -> {}) 
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/admin/login", "/api/**").permitAll()
+                .requestMatchers("/**").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
@@ -61,6 +61,7 @@ public class SecurityConfig {
                         .allowedOrigins("http://localhost:3000", "https://localhost:3000","https://safaisetu.onrender.com")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowCredentials(true);
+               
             }
         };
     }
