@@ -3,6 +3,7 @@ package com.aarish.safai_setu_admin.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.aarish.safai_setu_admin.model.Report;
 import com.aarish.safai_setu_admin.service.AdminService;
@@ -17,8 +18,9 @@ public class AdminController {
     public ResponseEntity<?> getReports() {
         return new ResponseEntity<>(service.getAllProducts(), HttpStatus.OK);
     }
-
+    
     @PutMapping("/api/admin/resolve/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> verifyResolve(@PathVariable int id) {
         Report report = service.verifyResolve(id);
         if (report == null) {
