@@ -19,8 +19,8 @@ public class AdminController {
         return new ResponseEntity<>(service.getAllProducts(), HttpStatus.OK);
     }
     
-    @PutMapping("/api/admin/resolve/{id}")
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/api/admin/verify/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> verifyResolve(@PathVariable int id) {
         Report report = service.verifyResolve(id);
         if (report == null) {
